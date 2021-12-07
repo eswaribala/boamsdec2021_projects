@@ -107,7 +107,7 @@
 			<artifactId>spring-cloud-starter-vault-config</artifactId>
 		</dependency>
 		<!-- Cloud bus -->
-			<!--     <dependency>
+			     <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-bus</artifactId>
 		</dependency>
@@ -115,7 +115,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
-		 -->
+	
 		
 		
 	</dependencies>
