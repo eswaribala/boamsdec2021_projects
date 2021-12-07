@@ -10,4 +10,5 @@ public class VaultConfiguration {
 
 	private String username;
 	private String password;
+
 }
