@@ -32,8 +32,7 @@ public class DBConfiguration {
     }
     
     
-    @Bean
-   
+    @Bean   
     public DataSource getDataSource()
     {
     	log.info("Entering Given Env.....");
