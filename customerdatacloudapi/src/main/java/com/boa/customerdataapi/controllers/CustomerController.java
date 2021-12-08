@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class CustomerController {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Customer Not Created");
     	
     }
+    @PreAuthorize("hasAuthority('SCOPE_TEST')")
     @GetMapping({"/v1.0", "/v1.1"})
     public List<Customer> fetchAllCustomers(){
     	//test message change
