@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.0">
+  <bpmn:process id="deliveryapi" name="deliveryapi" isExecutable="true">
+    <bpmn:startEvent id="StartEvent" name="Request&#10;received">
+      <bpmn:outgoing>SequenceFlow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow1" sourceRef="StartEvent" targetRef="ServiceTask_Logger" />
+    <bpmn:serviceTask id="ServiceTask_Logger" name="Log to console" camunda:delegateExpression="${logger}">
+      <bpmn:incoming>SequenceFlow1</bpmn:incoming>
+      <bpmn:outgoing>Flow_01k9och</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_01k9och" sourceRef="ServiceTask_Logger" targetRef="CustomerData" />
+    <bpmn:userTask id="CustomerData" name="Customer Data" camunda:formKey="embedded:/forms/customer-data-form.html">
+      <bpmn:incoming>Flow_01k9och</bpmn:incoming>
+      <bpmn:incoming>Flow_0egbhdx</bpmn:incoming>
+      <bpmn:outgoing>Flow_17mtwci</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_17mtwci" sourceRef="CustomerData" targetRef="ValidateCustomerData" />
+    <bpmn:exclusiveGateway id="Gateway_0r1fnt9">
+      <bpmn:incoming>Flow_11g0bcu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0leo2bb</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0egbhdx</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_1torho3">
+      <bpmn:incoming>Flow_0leo2bb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0leo2bb" sourceRef="Gateway_0r1fnt9" targetRef="Event_1torho3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0egbhdx" sourceRef="Gateway_0r1fnt9" targetRef="CustomerData">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not approved}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_11g0bcu" sourceRef="ValidateCustomerData" targetRef="Gateway_0r1fnt9" />
+    <bpmn:userTask id="ValidateCustomerData" name="Validate" camunda:formKey="embedded:/forms/validate-customer-data-form.html">
+      <bpmn:incoming>Flow_17mtwci</bpmn:incoming>
+      <bpmn:outgoing>Flow_11g0bcu</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_1037t9f">
+      <bpmn:text>Loggged In</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0kuxnfh" sourceRef="ServiceTask_Logger" targetRef="TextAnnotation_1037t9f" />
+    <bpmn:textAnnotation id="TextAnnotation_0d221ap">
+      <bpmn:text>Send Customer Data</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0rf5z6l" sourceRef="CustomerData" targetRef="TextAnnotation_0d221ap" />
+    <bpmn:textAnnotation id="TextAnnotation_0fop9lo">
+      <bpmn:text>Validate Customer Data</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0nqr97a" sourceRef="ValidateCustomerData" targetRef="TextAnnotation_0fop9lo" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="deliveryapi">
+      <bpmndi:BPMNShape id="TextAnnotation_1037t9f_di" bpmnElement="TextAnnotation_1037t9f">
+        <dc:Bounds x="340" y="120" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0d221ap_di" bpmnElement="TextAnnotation_0d221ap">
+        <dc:Bounds x="490" y="290" width="100" height="41" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0fop9lo_di" bpmnElement="TextAnnotation_0fop9lo">
+        <dc:Bounds x="670" y="301" width="100" height="41" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_08va5r8_di" bpmnElement="SequenceFlow1">
+        <di:waypoint x="209" y="220" />
+        <di:waypoint x="320" y="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="228" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01k9och_di" bpmnElement="Flow_01k9och">
+        <di:waypoint x="420" y="220" />
+        <di:waypoint x="490" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17mtwci_di" bpmnElement="Flow_17mtwci">
+        <di:waypoint x="590" y="220" />
+        <di:waypoint x="640" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0leo2bb_di" bpmnElement="Flow_0leo2bb">
+        <di:waypoint x="855" y="220" />
+        <di:waypoint x="942" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0egbhdx_di" bpmnElement="Flow_0egbhdx">
+        <di:waypoint x="830" y="195" />
+        <di:waypoint x="830" y="80" />
+        <di:waypoint x="540" y="80" />
+        <di:waypoint x="540" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11g0bcu_di" bpmnElement="Flow_11g0bcu">
+        <di:waypoint x="740" y="220" />
+        <di:waypoint x="805" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="173" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="171" y="238" width="42" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1hh7jar_di" bpmnElement="CustomerData">
+        <dc:Bounds x="490" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0r1fnt9_di" bpmnElement="Gateway_0r1fnt9" isMarkerVisible="true">
+        <dc:Bounds x="805" y="195" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_16vok30_di" bpmnElement="ServiceTask_Logger">
+        <dc:Bounds x="320" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12oyvbs_di" bpmnElement="ValidateCustomerData">
+        <dc:Bounds x="640" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1torho3_di" bpmnElement="Event_1torho3">
+        <dc:Bounds x="942" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0kuxnfh_di" bpmnElement="Association_0kuxnfh">
+        <di:waypoint x="379" y="180" />
+        <di:waypoint x="386" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0rf5z6l_di" bpmnElement="Association_0rf5z6l">
+        <di:waypoint x="540" y="260" />
+        <di:waypoint x="540" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0nqr97a_di" bpmnElement="Association_0nqr97a">
+        <di:waypoint x="703" y="260" />
+        <di:waypoint x="715" y="301" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
